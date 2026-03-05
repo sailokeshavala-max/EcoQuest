@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoQuest India — Green Champions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- TOAST NOTIFICATION -->
+<div class="toast" id="toast"></div>
+
+<!-- ======================================================= -->
+<!-- PAGE 1: LANDING -->
+<!-- ======================================================= -->
+<div class="page active" id="landing-page">
+  <section id="landing">
+    <div class="leaves">
+      <div class="leaf-bg" style="width:200px;height:200px;top:-50px;left:-60px;animation-delay:0s"></div>
+      <div class="leaf-bg" style="width:140px;height:140px;top:30%;right:-40px;animation-delay:2s"></div>
+      <div class="leaf-bg" style="width:80px;height:80px;bottom:15%;left:10%;animation-delay:4s"></div>
+    </div>
+    <div class="hero">
+      <span class="earth-icon">🌏</span>
+      <div class="logo">Eco<span>Quest</span> India</div>
+      <div class="tagline">🌿 Learn • Play • Save the Planet</div>
+      <div class="cta-row">
+        <button class="btn btn-primary" onclick="showPage('auth-page', 'student')">🎓 I'm a Student</button>
+        <button class="btn btn-secondary" onclick="showPage('auth-page', 'teacher')">👩‍🏫 I'm a Teacher</button>
+      </div>
+    </div>
+    <div class="features">
+      <div class="feat-card">
+        <span class="fi">🏆</span>
+        <h3>City Leaderboards</h3>
+        <p>Compete with students across India's major cities</p>
+      </div>
+      <div class="feat-card">
+        <span class="fi">🧠</span>
+        <h3>Eco Quizzes</h3>
+        <p>Daily challenges powered by AI on real Indian data</p>
+      </div>
+      <div class="feat-card">
+        <span class="fi">🌱</span>
+        <h3>Daily Missions</h3>
+        <p>Real-world green tasks to earn XP & badges</p>
+      </div>
+      <div class="feat-card">
+        <span class="fi">📊</span>
+        <h3>Live Eco Data</h3>
+        <p>AQI, water levels & forest data from Indian datasets</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================================================= -->
+<!-- PAGE 2: AUTH (LOGIN) -->
+<!-- ======================================================= -->
+<div class="page" id="auth-page">
+  <section id="auth">
+    <div class="auth-box">
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-student" onclick="switchAuthTab('student')">🎓 Student</button>
+        <button class="auth-tab" id="tab-teacher" onclick="switchAuthTab('teacher')">👩‍🏫 Teacher</button>
+      </div>
+
+      <!-- STUDENT LOGIN -->
+      <div id="auth-student" class="auth-body">
+        <span class="auth-icon">🌿</span>
+        <h2>Student Login</h2>
+        <p class="sub">Enter your mobile number to get started</p>
+        <div id="student-alert"></div>
+        <div class="form-group">
+          <label>📱 Mobile Number</label>
+          <div class="otp-row">
+            <input type="tel" id="student-phone" placeholder="+91 9876543210" maxlength="13">
+            <button class="send-otp-btn" id="send-otp-btn" onclick="sendOTP()">Send OTP</button>
+          </div>
+        </div>
+        <div class="form-group" id="otp-group" style="display:none">
+          <label>🔑 Enter OTP</label>
+          <input type="text" id="otp-input" placeholder="• • • • • •" maxlength="6"
+            style="width:100%;text-align:center;font-size:1.5rem;letter-spacing:8px;font-weight:800;padding:13px 16px;border:2px solid var(--border);border-radius:12px;font-family:'Nunito',sans-serif;background:var(--bg);">
+          <div class="otp-status" id="otp-status"></div>
+        </div>
+        <div id="verify-btn-wrap" style="display:none">
+          <button class="btn btn-primary" style="width:100%;margin-top:8px" id="verify-btn" onclick="verifyOTP()">✅ Verify & Continue →</button>
+        </div>
+        <div class="back-link"><a onclick="showPage('landing-page')">← Back to Home</a></div>
+      </div>
+
+      <!-- TEACHER LOGIN -->
+      <div id="auth-teacher" class="auth-body" style="display:none">
+        <span class="auth-icon">📚</span>
+        <h2>Teacher Login</h2>
+        <p class="sub">Access your class analytics dashboard</p>
+        <div id="teacher-alert"></div>
+        <div class="form-group">
+          <label>👤 Full Name</label>
+          <input type="text" id="teacher-name" placeholder="e.g. Mrs. Priya Menon">
+        </div>
+        <div class="form-group">
+          <label>🏫 School Name</label>
+          <input type="text" id="teacher-school" placeholder="e.g. Delhi Public School">
+        </div>
+        <div class="form-group">
+          <label>🔑 Teacher Code</label>
+          <input type="password" id="teacher-code" placeholder="Enter code (try: ECO2024)">
+        </div>
+        <button class="btn btn-sky" style="width:100%;margin-top:8px" onclick="teacherLogin()">Access Dashboard 📊</button>
+        <div class="back-link"><a onclick="showPage('landing-page')">← Back to Home</a></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================================================= -->
+<!-- PAGE 2.5: ONBOARDING (3 STEPS) -->
+<!-- ======================================================= -->
+<div class="page" id="onboarding-page">
+  <div class="onboarding-wrap">
+
+    <!-- Step Dots -->
+    <div class="ob-dots" id="ob-steps">
+      <div class="ob-step active" id="ob-dot-1"></div>
+      <div class="ob-step" id="ob-dot-2"></div>
+      <div class="ob-step" id="ob-dot-3"></div>
+    </div>
+
+    <!-- STEP 1: Profile -->
+    <div class="ob-card" id="ob-step-1">
+      <div class="ob-header">
+        <div class="ob-emoji">🌿</div>
+        <h2>Welcome aboard!</h2>
+        <p>Let's set up your EcoQuest profile</p>
+      </div>
+      <div class="form-group">
+        <label>👤 Your Full Name</label>
+        <input type="text" id="ob-name" placeholder="e.g. Arjun Sharma">
+      </div>
+      <div class="form-group">
+        <label>🏫 Your School / College</label>
+        <input type="text" id="ob-school" placeholder="e.g. Kendriya Vidyalaya, Chennai">
+      </div>
+      <div class="form-group">
+        <label>📚 Class / Grade</label>
+        <select id="ob-class">
+          <option value="">Select Class</option>
+          <option>Class 6</option><option>Class 7</option><option>Class 8</option>
+          <option>Class 9</option><option>Class 10</option><option>Class 11</option>
+          <option>Class 12</option><option>College / Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>🎂 Age</label>
+        <input type="number" id="ob-age" placeholder="e.g. 15" min="8" max="25">
+      </div>
+      <div id="ob1-alert"></div>
+      <button class="btn btn-primary" style="width:100%;margin-top:8px" onclick="obNext(1)">
+        Continue → <span style="opacity:0.7">Step 2 of 3</span>
+      </button>
+    </div>
+
+    <!-- STEP 2: Location -->
+    <div class="ob-card" id="ob-step-2" style="display:none">
+      <div class="ob-header">
+        <div class="ob-emoji">📍</div>
+        <h2>Where are you from?</h2>
+        <p>This sets your leaderboard and eco data</p>
+      </div>
+      <div class="form-group">
+        <label>🗺️ State</label>
+        <select id="ob-state" onchange="updateCities('ob-city', this.value); document.getElementById('ob-city').onchange = showObEcoPreview;">
+          <option value="">Select State</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>🏙️ City</label>
+        <select id="ob-city">
+          <option value="">Select City</option>
+        </select>
+      </div>
+      <div id="ob-eco-preview" style="display:none" class="ob-eco-preview">
+        <div class="ob-eco-title">🌍 Live Eco Snapshot</div>
+        <div id="ob-eco-mini"></div>
+      </div>
+      <div id="ob2-alert" style="margin-top:12px"></div>
+      <div style="display:flex;gap:10px;margin-top:20px">
+        <button class="btn btn-outline" style="flex:1" onclick="obBack(2)">← Back</button>
+        <button class="btn btn-primary" style="flex:2" onclick="obNext(2)">
+          Continue → <span style="opacity:0.7">Step 3 of 3</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 3: Avatar + Interests -->
+    <div class="ob-card" id="ob-step-3" style="display:none">
+      <div class="ob-header">
+        <div class="ob-emoji">🎨</div>
+        <h2>Choose your identity</h2>
+        <p>Pick an avatar & your eco interests</p>
+      </div>
+      <div class="ob-section-label">🦸 Pick Your Eco Avatar</div>
+      <div class="avatar-grid" id="avatar-grid">
+        <div class="av-opt selected" data-av="🌱" onclick="selectAvatar(this)">🌱</div>
+        <div class="av-opt" data-av="🌳" onclick="selectAvatar(this)">🌳</div>
+        <div class="av-opt" data-av="🌊" onclick="selectAvatar(this)">🌊</div>
+        <div class="av-opt" data-av="☀️" onclick="selectAvatar(this)">☀️</div>
+        <div class="av-opt" data-av="🦋" onclick="selectAvatar(this)">🦋</div>
+        <div class="av-opt" data-av="🐯" onclick="selectAvatar(this)">🐯</div>
+        <div class="av-opt" data-av="🦚" onclick="selectAvatar(this)">🦚</div>
+        <div class="av-opt" data-av="🌸" onclick="selectAvatar(this)">🌸</div>
+        <div class="av-opt" data-av="⚡" onclick="selectAvatar(this)">⚡</div>
+        <div class="av-opt" data-av="🏔️" onclick="selectAvatar(this)">🏔️</div>
+      </div>
+      <div class="ob-section-label" style="margin-top:20px">
+        🌿 Your Eco Interests <span style="font-weight:400;color:#6b8f71">(pick up to 3)</span>
+      </div>
+      <div class="interest-grid" id="interest-grid">
+        <div class="int-opt selected" onclick="toggleInterest(this)">💨 Air Quality</div>
+        <div class="int-opt" onclick="toggleInterest(this)">💧 Water</div>
+        <div class="int-opt" onclick="toggleInterest(this)">🌳 Forests</div>
+        <div class="int-opt" onclick="toggleInterest(this)">♻️ Recycling</div>
+        <div class="int-opt" onclick="toggleInterest(this)">☀️ Solar Energy</div>
+        <div class="int-opt" onclick="toggleInterest(this)">🌡️ Climate</div>
+        <div class="int-opt" onclick="toggleInterest(this)">🐾 Wildlife</div>
+        <div class="int-opt" onclick="toggleInterest(this)">🌾 Agriculture</div>
+      </div>
+      <div class="bonus-banner">
+        <div style="font-size:1.8rem">🎁</div>
+        <div>
+          <div style="font-weight:800;font-size:0.9rem;color:#5a3e00">Welcome Bonus!</div>
+          <div style="font-size:0.82rem;color:#7a5c00;margin-top:2px">
+            Complete your profile and earn <strong>+100 XP</strong> to start!
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:4px">
+        <button class="btn btn-outline" style="flex:1" onclick="obBack(3)">← Back</button>
+        <button class="btn btn-primary" style="flex:2" onclick="finishOnboarding()">🚀 Start My Journey!</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ======================================================= -->
+<!-- PAGE 3: STUDENT APP -->
+<!-- ======================================================= -->
+<div class="page" id="app-page">
+  <div id="app">
+    <!-- Top Bar -->
+    <div class="topbar">
+      <button class="prev-btn" onclick="showPage('landing-page')">← Home</button>
+      <div class="brand">Eco<span>Quest</span></div>
+      <div class="topbar-right">
+        <div class="user-pill" id="topbar-user">🌱 Student</div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+
+      <!-- HOME SECTION -->
+      <div class="section active" id="sec-home">
+        <div class="welcome-banner">
+          <h2>🌿 Welcome, <span id="welcome-name">Eco Hero</span>!</h2>
+          <p>Keep saving the planet, one quest at a time 🌍</p>
+          <div class="xp-bar-wrap">
+            <div class="xp-label">
+              <span>⚡ <span id="xp-current">340</span> XP</span>
+              <span>Next level: <span id="xp-next">500</span> XP</span>
+            </div>
+            <div class="xp-bar"><div class="xp-fill" id="xp-fill" style="width:68%"></div></div>
+          </div>
+          <div class="badge-row">
+            <span class="badge">🌱 Level 4</span>
+            <span class="badge">🔥 7 Day Streak</span>
+            <span class="badge">🏅 Green Warrior</span>
+          </div>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card"><span class="si">⚡</span><div class="sv" id="stat-xp">340</div><div class="sl">Total XP Earned</div></div>
+          <div class="stat-card"><span class="si">✅</span><div class="sv" id="stat-tasks">12</div><div class="sl">Tasks Completed</div></div>
+          <div class="stat-card"><span class="si">🧠</span><div class="sv" id="stat-quizzes">8</div><div class="sl">Quizzes Done</div></div>
+          <div class="stat-card"><span class="si">🏆</span><div class="sv" id="stat-rank">#24</div><div class="sl">City Rank</div></div>
+        </div>
+        <div class="section-title">📋 Today's Eco Missions</div>
+        <div class="daily-tasks" id="daily-tasks"></div>
+      </div>
+
+      <!-- QUIZ SECTION -->
+      <div class="section" id="sec-quiz">
+        <div id="quiz-home-view">
+          <div class="quiz-hero">
+            <h2>🧠 Eco Knowledge Quiz</h2>
+            <p>Test your knowledge on India's environment & earn XP!</p>
+          </div>
+          <div class="section-title">🎯 Choose a Category</div>
+          <div class="quiz-categories" id="quiz-cats"></div>
+        </div>
+        <div id="active-quiz">
+          <button class="prev-btn-dark" onclick="backToQuizHome()">← Back to Categories</button>
+          <div class="quiz-header">
+            <div class="quiz-q-num" id="q-num">Q 1/5</div>
+            <div class="quiz-progress"><div class="quiz-progress-fill" id="q-prog" style="width:20%"></div></div>
+            <div class="quiz-score-live" id="q-score-live">Score: 0</div>
+          </div>
+          <div class="quiz-q" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-next-wrap">
+            <button class="btn btn-sky" id="next-q-btn" onclick="nextQuestion()" style="display:none">Next →</button>
+          </div>
+        </div>
+        <div id="quiz-result-view" style="display:none">
+          <div class="quiz-result">
+            <div class="score-circle" id="result-score">0/5</div>
+            <h2 id="result-msg">Great Job!</h2>
+            <p id="result-sub">You earned XP for this quiz!</p>
+            <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+              <button class="btn btn-primary" onclick="retryQuiz()">🔄 Try Again</button>
+              <button class="btn btn-outline" onclick="backToQuizHome()">📋 More Quizzes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LEADERBOARD SECTION -->
+      <div class="section" id="sec-leaderboard">
+        <div class="section-title">🏆 Leaderboard</div>
+        <div class="location-selector">
+          <h3>📍 Filter by Location</h3>
+          <div class="loc-row">
+            <select id="lb-state" onchange="updateCities('lb-city', this.value); updateLeaderboard()">
+              <option value="">All India</option>
+            </select>
+            <select id="lb-city" onchange="updateLeaderboard()">
+              <option value="">All Cities</option>
+            </select>
+          </div>
+        </div>
+        <div class="leaderboard-list" id="lb-list"></div>
+      </div>
+
+      <!-- ECO DATA SECTION -->
+      <div class="section" id="sec-data">
+        <div class="section-title">🌍 India Eco Data</div>
+        <div class="location-selector">
+          <h3>📍 Select State & City</h3>
+          <div class="loc-row">
+            <select id="data-state" onchange="updateCities('data-city', this.value); updateEcoData()">
+              <option value="">Select State</option>
+            </select>
+            <select id="data-city" onchange="updateEcoData()">
+              <option value="">Select City</option>
+            </select>
+          </div>
+        </div>
+        <div id="eco-data-display"></div>
+      </div>
+
+      <!-- PROFILE SECTION -->
+      <div class="section" id="sec-profile">
+        <div class="profile-hero">
+          <div class="profile-avatar">🌿</div>
+          <h2 id="profile-name">Eco Hero</h2>
+          <p id="profile-phone">📱 +91 XXXXXXXXXX</p>
+          <div class="level-badge">⭐ Level 4 — Green Warrior</div>
+        </div>
+        <div class="stats-grid" style="margin-bottom:24px">
+          <div class="stat-card"><span class="si">⚡</span><div class="sv">340</div><div class="sl">Total XP</div></div>
+          <div class="stat-card"><span class="si">🔥</span><div class="sv">7</div><div class="sl">Day Streak</div></div>
+          <div class="stat-card"><span class="si">🧠</span><div class="sv">8</div><div class="sl">Quizzes</div></div>
+          <div class="stat-card"><span class="si">🌱</span><div class="sv">12</div><div class="sl">Tasks Done</div></div>
+        </div>
+        <div class="section-title">🏅 Achievements</div>
+        <div class="achievements-grid" id="achievements-grid"></div>
+      </div>
+
+    </div><!-- /content -->
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+      <button class="nav-item active" onclick="switchSection('home', this)"><span class="nav-icon">🏠</span>Home</button>
+      <button class="nav-item" onclick="switchSection('quiz', this)"><span class="nav-icon">🧠</span>Quiz</button>
+      <button class="nav-item" onclick="switchSection('leaderboard', this)"><span class="nav-icon">🏆</span>Ranks</button>
+      <button class="nav-item" onclick="switchSection('data', this)"><span class="nav-icon">🌍</span>Eco Data</button>
+      <button class="nav-item" onclick="switchSection('profile', this)"><span class="nav-icon">👤</span>Profile</button>
+    </nav>
+  </div>
+</div>
+
+<!-- ======================================================= -->
+<!-- PAGE 4: TEACHER DASHBOARD -->
+<!-- ======================================================= -->
+<div class="page" id="teacher-page">
+  <div id="teacher-app">
+    <!-- Teacher Top Bar -->
+    <div class="teacher-topbar">
+      <button class="prev-btn" onclick="showPage('landing-page')">← Home</button>
+      <div class="brand">EcoQuest <span>Teacher</span></div>
+      <div class="topbar-right">
+        <div class="user-pill" id="teacher-topbar-user" style="background:rgba(255,255,255,0.15);color:#fff">👩‍🏫 Teacher</div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+      </div>
+    </div>
+
+    <div class="teacher-content">
+      <div class="section-title" style="font-size:1.5rem;margin-bottom:20px">📊 Class Analytics Dashboard</div>
+
+      <!-- Class Stats -->
+      <div class="t-stat-grid">
+        <div class="t-stat"><span class="ts-icon">👨‍🎓</span><div class="ts-val">28</div><div class="ts-label">Total Students</div></div>
+        <div class="t-stat"><span class="ts-icon">⚡</span><div class="ts-val">4,820</div><div class="ts-label">Total XP Earned</div></div>
+        <div class="t-stat"><span class="ts-icon">✅</span><div class="ts-val">236</div><div class="ts-label">Tasks Completed</div></div>
+        <div class="t-stat"><span class="ts-icon">🧠</span><div class="ts-val">112</div><div class="ts-label">Quizzes Done</div></div>
+        <div class="t-stat"><span class="ts-icon">🔥</span><div class="ts-val">84%</div><div class="ts-label">Avg. Engagement</div></div>
+        <div class="t-stat"><span class="ts-icon">🌱</span><div class="ts-val">18</div><div class="ts-label">Active Today</div></div>
+      </div>
+
+      <!-- Weekly Activity Chart -->
+      <div class="chart-wrap">
+        <h3>📈 Weekly Class Activity (Tasks Completed per Day)</h3>
+        <div class="bar-chart" id="weekly-chart"></div>
+      </div>
+
+      <!-- Student XP Chart -->
+      <div class="chart-wrap">
+        <h3>⚡ Top 8 Students by XP</h3>
+        <div class="bar-chart" id="xp-chart"></div>
+      </div>
+
+      <!-- Student Progress Table -->
+      <div class="student-table-wrap">
+        <h3>👩‍🎓 Student Progress (Day by Day)</h3>
+        <div style="overflow-x:auto">
+          <table class="student-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Student</th>
+                <th>XP</th>
+                <th>Tasks</th>
+                <th>Quizzes</th>
+                <th>Streak</th>
+                <th>Progress</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="student-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Activity Feed -->
+      <div class="activity-feed">
+        <h3>📡 Recent Student Activity</h3>
+        <div id="activity-feed-list"></div>
+      </div>
+
+    </div><!-- /teacher-content -->
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
